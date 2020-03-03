@@ -18,7 +18,15 @@ app.use(express.static("public"));
 
 const PORT = process.env.PORT || 8080;
 
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+mongoose.connect(MONGODB_URI);
 
+var db = mongoose.connection; 
+
+db.on("error", console.error.bind(console, "connection error:")); 
+db.once("open", function() {
+console.log("connected to Mongoose")
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
