@@ -3,6 +3,7 @@ var router = express.Router();
 
 var Comments = require("../models/comments.js");
 var Articles = require("../models/article.js"); 
+var scrapeArticles = require("../models/articles"); 
 
 const cheerio = require("cheerio");
 const axios = require("axios");
@@ -45,9 +46,9 @@ router.get("/api/scrape", function (req, res) {
             if(titlesArray.indexOf(results.title) == -1){
                 titlesArray.push(results.title);
 
-                Articles.count({ title: results.title}, function (err, test){
+                scrapeArticles.count({ title: results.title}, function (err, test){
                 if(test == 0){
-                    var entry = new Articles (results);
+                    var entry = new scrapeArticles (results);
 
                     entry.save(function(err, doc) {
                     if (err) {
@@ -80,13 +81,13 @@ router.get("/api/scrape", function (req, res) {
     });
 
     router.get("/articles", function (req, res) {
-        Articles.find().sort({_id: 1}).limit(8)
+        scrapeArticles.find().sort({_id: 1}).limit(7)
         .exec(function(err, doc) {
             if (err) {
                 console.log(err); 
             } else {
                 
-                var hbsObject = {Articles: doc}
+                var hbsObject = {scrapeArticles: doc}
                 res.render("index", hbsObject); 
                 console.log(doc);
             }
@@ -95,7 +96,7 @@ router.get("/api/scrape", function (req, res) {
       
     
     router.get("/articles/json", function (req, res) {
-        Articles.find({}, function(err, doc) {
+        scrapeArticles.find({}, function(err, doc) {
             if (err) {
                 console.log(err); 
             } else {
@@ -104,7 +105,50 @@ router.get("/api/scrape", function (req, res) {
         });
         
     });
-    
+
+    router.post("/api/comments/:id", function(req, res) {
+        var user = req.body.name;
+        var commentBody = req.body.comment;
+        var articleId = req.params.id;
+
+        var commentObj = {
+            name: user,
+            body: commentBody
+        };
+
+        var newComment = new Comments(commentObj)
+
+        newComment.save(function(err, doc) {
+            if (err) {
+                console.log(err); 
+            }   else {
+                console.log(doc._id); 
+                console.log(articleId)
+
+                scrapeArticles.findByIdAndUpdate({_id: req.params.id}, {$push: {comment: doc._id} }, {new: true})
+                .exec(function(err, doc) {
+                    if (err) {
+                        console.log(err);
+                    }   else {
+                        res.redirect("/")
+                    }
+                });
+            }
+        });
+    });
+
+    router.delete("/delete/comment/:id", function (req, res){
+        Comments.findByIdAndRemove(req.params.id, function (err, doc) {
+            if (err) {
+                console.log(err);
+                } else {
+                res.sendStatus(200);
+                }
+            
+    });
+
+  });
+
 });
 
 

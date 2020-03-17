@@ -1,6 +1,6 @@
 <nav>
-    <div class="nav-wrapper">
-    <a href="#" class="brand-logo center">Logo</a>
+    <div class="nav-wrapper indigo lighten-3">
+    <a href="#" class="brand-logo center">Welcome to Xxov</a>
     <ul id="nav-mobile" class="left hide-on-med-and-down">
         <li><a href="">Sass</a></li>
         <li><a class="waves-effect waves-light btn" id="newScrape">Scrape</a></li>
@@ -11,16 +11,30 @@
     </div>
 </nav>
 
-{{#each Articles}}
+{{#each scrapeArticles}}
 
 
     <div class="row">
-        <div class="col s12 m5">
-        <div class="card-panel teal">
-            <span class="white-text">
-           {{this.title}}
-            </span>
-            <p>Want more? <a href="{{this.link}}" target="_blank">Click here.</a></p>
+        <div class="center-align col s12 m12 l12">
+        <div class="center card-panel blue darken-1">
+            <span class="white-text">{{this.title}}</span>
+            <br></br>
+            <span class="white-text"> {{this.summary}}</span>
+            <br></br>
+            <a class="waves-effect waves-light btn" href="{{this.link}}" target="_blank"><i class="material-icons right">cloud</i>More? Click here.</a>
+
+            <ul class="collapsible z-depth-3">
+                <li>
+                <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+                <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                </li>
+                <li>
+                <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+                <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                </li>
+            </ul>
+            
+            
         </div>
         </div>
     </div>
