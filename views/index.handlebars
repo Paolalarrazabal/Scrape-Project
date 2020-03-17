@@ -11,12 +11,18 @@
     </div>
 </nav>
 
+{{#each Articles}}
 
-<div class="row"> 
-    <div class="col s12 m6">
-        {{#each article}}
-      
-        {{/each}}
-      </div>
+
+    <div class="row">
+        <div class="col s12 m5">
+        <div class="card-panel teal">
+            <span class="white-text">
+           {{this.title}}
+            </span>
+            <p>Want more? <a href="{{this.link}}" target="_blank">Click here.</a></p>
+        </div>
+        </div>
     </div>
-</div>
+  
+{{/each}}

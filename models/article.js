@@ -1,17 +1,24 @@
 //Require Mongoose
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 //Define a schema
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var ArticleSchema = new Schema({
+const ArticlesSchema = new Schema({
 title:  {
     type: String, 
-    required: true
+    required: true,
+    unique: true
 }, 
 link: {
     type: String, 
-    required: true
+    required: true,
+    unique: true
+},
+summary: {
+    type: String, 
+    required: true,
+
 }, 
 
 // comment is an array 
@@ -25,5 +32,6 @@ comment: [
 });
 
 // Compile model from schema
-var Article = mongoose.model('Article', ArticleSchema );
+const Articles = mongoose.model('Articles', ArticlesSchema);
+module.exports = Articles;
 
