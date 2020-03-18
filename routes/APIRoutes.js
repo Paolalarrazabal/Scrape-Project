@@ -90,8 +90,11 @@ router.get("/api/scrape", function (req, res) {
                 var hbsObject = {scrapeArticles: doc}
                 res.render("index", hbsObject); 
                 console.log(doc);
+                
             }
+            
         });
+       
     });
       
     
