@@ -15,7 +15,7 @@
 
 
     <div class="row">
-        <div class="center-align col s12 m12 l12">
+        <div class="col s12 m12 l12">
         <div class="center card-panel blue darken-1">
             <span class="white-text">{{this.title}}</span>
             <br></br>
@@ -26,35 +26,51 @@
             <span class="white-text">Drop your name and thoughts below</span>
            
             <div class="row blue darken-1">
-            <form class="col s12">
+            <form class="col s12" id="form-add-{{_id}}" method="post" action="add/comment/{{_id}}">
              
           
                 <!--- name input ---> 
                 <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="icon_prefix" type="text" class="validate">
-                <label for="icon_prefix">First Name</label>
+                <input id="userName{{_id}}" name="name" type="text" class="validate">
+                <label for="userName">First Name</label>
                 </div>
                 <!--- comment ---> 
                 <div class="input-field col s6">
                 <i class="material-icons prefix">mode_edit</i>
-                <textarea id="textarea1" class="materialize-textarea"></textarea>
-                <label for="textarea1">You Comment</label>
+                <textarea id="commentArea{{_id}}" name="comment" class="materialize-textarea"></textarea>
+                <label for="commentArea">You Comment</label>
                 </div>
             
             </form>
             <!--- comment submit button ---> 
-            <button class="btn waves-effect waves-light addCommentButton" data-id={{id}} type="submit" name="action">Submit
+            <button class="btn waves-effect waves-light addCommentButton" data-id={{id}} type="submit" name="action" value="Submit">Submit
                 <i class="material-icons right">send</i>
             </button>
             <br></br>
            <!--- comments display --->
-            <ul class="collapsible z-depth-3">
-                <li>
-                <div class="collapsible-header"><i class="material-icons">cloud</i>View Comments</div>
-                <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+           {{#if Comments}}
+            <ul class="collection">
+                {{#each Comments}}
+                <li class="collection-item avatar indigo lighten-3">
+                <i class="material-icons circle">folder</i>
+                <form id="form-delete-{{_id}}" action="delete/comment/{{_id}}" method="delete">
+                {{this.name}}
+                <p class="left-align white-text">name</p>
+                {{this.body}}    
+                <p class="left-align white-text">comment</p>
+                
+                    <button class="btn waves-effect waves-light secondary-content deleteCommentButton" data-id="{{id}}" type="submit" name="action" value="Delete">Delete
+                    
+                    </button>
                 </li>
+                </ul>
+                </form>
+               {{/each}}
             </ul>
+            {{else}}
+            <p>Be the first to comment.</p> 
+            {{/if}}
         </div>
            
             
