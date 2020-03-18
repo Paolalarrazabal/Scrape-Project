@@ -26,7 +26,7 @@
             <span class="white-text">Drop your name and thoughts below</span>
            
             <div class="row blue darken-1">
-            <form class="col s12" id="form-add-{{_id}}" method="post" action="add/comment/{{_id}}">
+            <form class="col s12" id="form-add-{{_id}}" method="post" action="/api/comments/{{_id}}">
              
           
                 <!--- name input ---> 
@@ -38,36 +38,40 @@
                 <!--- comment ---> 
                 <div class="input-field col s6">
                 <i class="material-icons prefix">mode_edit</i>
-                <textarea id="commentArea{{_id}}" name="comment" class="materialize-textarea"></textarea>
-                <label for="commentArea">You Comment</label>
+                <textarea id="commentBody{{_id}}" name="body" class="materialize-textarea"></textarea>
+                <label for="commentArea">Your Comment</label>
                 </div>
             
             </form>
             <!--- comment submit button ---> 
-            <button class="btn waves-effect waves-light addCommentButton" data-id={{id}} type="submit" name="action" value="Submit">Submit
+            <button class="btn waves-effect waves-light addCommentButton" data-id="{{id}}" type="submit" value="Submit">Submit
                 <i class="material-icons right">send</i>
             </button>
             <br></br>
            <!--- comments display --->
-           {{#if Comments}}
+           
+           {{#if comment}}
             <ul class="collection">
-                {{#each Comments}}
+                {{#each comment}}
                 <li class="collection-item avatar indigo lighten-3">
                 <i class="material-icons circle">folder</i>
                 <form id="form-delete-{{_id}}" action="delete/comment/{{_id}}" method="delete">
-                {{this.name}}
-                <p class="left-align white-text">name</p>
-                {{this.body}}    
-                <p class="left-align white-text">comment</p>
                 
+                <p class="left-align white-text">{{name}}</p>
+                    
+                <p class="left-align white-text">{{body}}</p>
+                    
                     <button class="btn waves-effect waves-light secondary-content deleteCommentButton" data-id="{{id}}" type="submit" name="action" value="Delete">Delete
                     
                     </button>
+                    </form>
                 </li>
+                    {{/each}}
                 </ul>
-                </form>
-               {{/each}}
-            </ul>
+                
+               
+            
+            
             {{else}}
             <p>Be the first to comment.</p> 
             {{/if}}

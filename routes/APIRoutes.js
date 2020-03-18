@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-var Comments = require("../models/comments.js");
+var Comment = require("../models/comments.js");
 var Articles = require("../models/article.js"); 
 var scrapeArticles = require("../models/articles"); 
 
@@ -119,7 +119,7 @@ router.get("/api/scrape", function (req, res) {
             body: commentBody
         };
 
-        var newComment = new Comments(commentObj)
+        var newComment = new Comment (commentObj)
 
         newComment.save(function(err, doc) {
             if (err) {
@@ -141,7 +141,7 @@ router.get("/api/scrape", function (req, res) {
     });
 
     router.delete("/delete/comment/:id", function (req, res){
-        Comments.findByIdAndRemove(req.params.id, function (err, doc) {
+        Comment.findByIdAndRemove(req.params.id, function (err, doc) {
             if (err) {
                 console.log(err);
                 } else {

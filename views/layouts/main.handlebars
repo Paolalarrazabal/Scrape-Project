@@ -28,5 +28,29 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="public/js/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+
+
+    <script type = "text/javascript">
+        $(document).ready(function(){
+            $(".addCommentButton").on("click", function (event) {
+            event.preventDefault();
+            let articleId = $(this).data("id"); 
+         
+            var commentForm = "form-add-" + articleId; 
+            var form = $("#" + commentForm); 
+
+            $.ajax("/api/comments/" + articleId,{
+                type: "POST", 
+                data: form.serialize(),
+            })
+            .done(function() {
+                console.log("comment submitted")
+            })
+            });
+        });
+    
+    
+    
+    </script>
 </body>
 </html>
